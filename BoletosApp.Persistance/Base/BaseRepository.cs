@@ -1,8 +1,8 @@
-﻿using BoletosApp.Domain.Repositories;
+﻿using BoletosApp.Domain.Base;
+using BoletosApp.Domain.Repositories;
 using BoletosApp.Domain.Result;
 using BoletosApp.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
 
 namespace BoletosApp.Persistance.Base
@@ -40,12 +40,32 @@ namespace BoletosApp.Persistance.Base
             return result;
         }
 
+        public virtual async Task<OperationResult> GetAll(Expression<Func<TEntity, bool>> filter)
+        {
+            OperationResult result = new OperationResult();
+
+            try
+            {
+                var datos = await this.entities.Where(filter).ToListAsync();
+                result.Data = datos;
+            }
+            catch (Exception ex)
+            {
+
+                result.Success = false;
+                result.Message = $"Ocurrió un error {ex.Message} obteniendo los datos.";
+            }
+
+            return result;
+
+        }
+
         public virtual async Task<OperationResult> GetEntityBy(int Id)
         {
             OperationResult result = new OperationResult();
             try
             {
-                var entity = await this.entities.FindAsync(Id); 
+                var entity = await this.entities.FindAsync(Id);
                 result.Data = entity;
             }
             catch (Exception ex)

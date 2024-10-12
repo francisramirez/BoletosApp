@@ -1,8 +1,8 @@
-﻿using BoletosApp.Domain.Base;
+﻿
 
-namespace BoletosApp.Domain.Entities.Configuration
+namespace BoletosApp.Persistance.Models.Configuration
 {
-    public sealed class Bus : BaseEntity
+    public sealed class BusModel
     {
         public int IdBus { get; set; }
         public string? NumeroPlaca { get; set; }
@@ -10,6 +10,6 @@ namespace BoletosApp.Domain.Entities.Configuration
         public int CapacidadPiso1 { get; set; }
         public int CapacidadPiso2 { get; set; }
         public bool Disponible { get; set; }
-
+        public DateTime FechaCreacion { get; set; }
     }
 }

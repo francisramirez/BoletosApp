@@ -1,14 +1,13 @@
-﻿
-using BoletosApp.Domain.Entities.Configuration;
+﻿using BoletosApp.Domain.Entities.Configuration;
 using BoletosApp.Domain.Result;
 using BoletosApp.Persistance.Base;
 using BoletosApp.Persistance.Context;
-using BoletosApp.Persistance.Exceptions;
 using BoletosApp.Persistance.Interfaces.Configuration;
+using BoletosApp.Persistance.Models.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace BoletosApp.Persistance.Repositories
+namespace BoletosApp.Persistance.Repositories.Configuracion
 {
     public class AsientoRepository : BaseRepository<Asiento>, IAsientoRepository
     {
@@ -74,7 +73,7 @@ namespace BoletosApp.Persistance.Repositories
             {
                 operationResult.Success = false;
                 operationResult.Message = "Error guardando el asiento.";
-                this.logger.LogError(operationResult.Message, ex.ToString());
+                logger.LogError(operationResult.Message, ex.ToString());
 
             }
             return operationResult;
@@ -134,7 +133,7 @@ namespace BoletosApp.Persistance.Repositories
             {
                 operationResult.Success = false;
                 operationResult.Message = "Error actualizando el asiento.";
-                this.logger.LogError(operationResult.Message, ex.ToString());
+                logger.LogError(operationResult.Message, ex.ToString());
 
             }
             return operationResult;
@@ -171,7 +170,7 @@ namespace BoletosApp.Persistance.Repositories
 
                 operationResult.Success = false;
                 operationResult.Message = "Error desactivando el asiento.";
-                this.logger.LogError(operationResult.Message, ex.ToString());
+                logger.LogError(operationResult.Message, ex.ToString());
             }
             return operationResult;
         }
@@ -184,26 +183,26 @@ namespace BoletosApp.Persistance.Repositories
             {
 
                 operationResult.Data = await (from asiento in _boletoContext.Asientos
-                                        join bus in _boletoContext.Buses on asiento.IdBus equals bus.IdBus
-                                        where asiento.Estatus == true
-                                        orderby asiento.FechaCreacion descending
-                                        select new Models.AsientoBusModel()
-                                        {
-                                            AsientoId = asiento.IdAsiento,
-                                            Bus = bus.Nombre,
-                                            BusId = bus.IdBus,
-                                            FechaCreacion = bus.FechaCreacion,
-                                            FechaModificacion = bus.FechaModificacion,
-                                            NumeroAsiento = asiento.NumeroAsiento,
-                                            NumeroPiso = asiento.NumeroPiso,
-                                            UsuarioModificacion = asiento.UsuarioModificacion
-                                        }).ToListAsync(); ;
+                                              join bus in _boletoContext.Buses on asiento.IdBus equals bus.IdBus
+                                              where asiento.Estatus == true
+                                              orderby asiento.FechaCreacion descending
+                                              select new AsientoBusModel()
+                                              {
+                                                  AsientoId = asiento.IdAsiento,
+                                                  Bus = bus.Nombre,
+                                                  BusId = bus.IdBus,
+                                                  FechaCreacion = bus.FechaCreacion,
+                                                  FechaModificacion = bus.FechaModificacion,
+                                                  NumeroAsiento = asiento.NumeroAsiento,
+                                                  NumeroPiso = asiento.NumeroPiso,
+                                                  UsuarioModificacion = asiento.UsuarioModificacion
+                                              }).ToListAsync(); ;
             }
             catch (Exception ex)
             {
                 operationResult.Success = false;
                 operationResult.Message = "Error obteniendo los asientos";
-                this.logger.LogError(operationResult.Message, ex.ToString());
+                logger.LogError(operationResult.Message, ex.ToString());
             }
             return operationResult;
         }
@@ -215,28 +214,33 @@ namespace BoletosApp.Persistance.Repositories
             {
 
                 operationResult.Data = await (from asiento in _boletoContext.Asientos
-                                        join bus in _boletoContext.Buses on asiento.IdBus equals bus.IdBus
-                                        where asiento.Estatus == true 
-                                         && asiento.IdAsiento == Id
-                                        select new Models.AsientoBusModel()
-                                        {
-                                            AsientoId = asiento.IdAsiento,
-                                            Bus = bus.Nombre,
-                                            BusId = bus.IdBus,
-                                            FechaCreacion = bus.FechaCreacion,
-                                            FechaModificacion = bus.FechaModificacion,
-                                            NumeroAsiento = asiento.NumeroAsiento,
-                                            NumeroPiso = asiento.NumeroPiso,
-                                            UsuarioModificacion = asiento.UsuarioModificacion
-                                        }).FirstOrDefaultAsync(); ;
+                                              join bus in _boletoContext.Buses on asiento.IdBus equals bus.IdBus
+                                              where asiento.Estatus == true
+                                               && asiento.IdAsiento == Id
+                                              select new AsientoBusModel()
+                                              {
+                                                  AsientoId = asiento.IdAsiento,
+                                                  Bus = bus.Nombre,
+                                                  BusId = bus.IdBus,
+                                                  FechaCreacion = bus.FechaCreacion,
+                                                  FechaModificacion = bus.FechaModificacion,
+                                                  NumeroAsiento = asiento.NumeroAsiento,
+                                                  NumeroPiso = asiento.NumeroPiso,
+                                                  UsuarioModificacion = asiento.UsuarioModificacion
+                                              }).FirstOrDefaultAsync(); ;
             }
             catch (Exception ex)
             {
                 operationResult.Success = false;
                 operationResult.Message = "Error obteniendo el asiento.";
-                this.logger.LogError(operationResult.Message, ex.ToString());
+                logger.LogError(operationResult.Message, ex.ToString());
             }
             return operationResult;
+        }
+
+        public List<OperationResult> GetAsientoByBusId(int busId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

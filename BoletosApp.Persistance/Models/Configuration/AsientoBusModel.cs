@@ -1,6 +1,4 @@
-﻿
-
-namespace BoletosApp.Persistance.Models
+﻿namespace BoletosApp.Persistance.Models.Configuration
 {
     public class AsientoBusModel
     {

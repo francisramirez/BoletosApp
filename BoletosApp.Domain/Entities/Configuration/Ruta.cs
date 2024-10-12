@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using BoletosApp.Domain.Base;
 
 
@@ -9,9 +8,9 @@ public partial class Ruta : BaseEntity
 {
     public int IdRuta { get; set; }
 
-    public string Origen { get; set; }
+    public string? Origen { get; set; }
 
-    public string Destino { get; set; }
+    public string? Destino { get; set; }
 
-    public DateTime? FechaCreacion { get; set; }
+   
 }
