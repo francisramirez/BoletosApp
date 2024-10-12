@@ -9,17 +9,11 @@ using Microsoft.Extensions.Logging;
 
 namespace BoletosApp.Persistance.Repositories.Configuracion
 {
-    public class AsientoRepository : BaseRepository<Asiento>, IAsientoRepository
+    public class AsientoRepository(BoletoContext boletoContext,
+                             ILogger<AsientoRepository> logger) : BaseRepository<Asiento>(boletoContext), IAsientoRepository
     {
-        private readonly BoletoContext _boletoContext;
-        private readonly ILogger<AsientoRepository> logger;
-
-        public AsientoRepository(BoletoContext boletoContext,
-                                 ILogger<AsientoRepository> logger) : base(boletoContext)
-        {
-            _boletoContext = boletoContext;
-            this.logger = logger;
-        }
+        private readonly BoletoContext _boletoContext = boletoContext;
+        private readonly ILogger<AsientoRepository> logger = logger;
 
         public async override Task<OperationResult> Save(Asiento entity)
         {
@@ -120,7 +114,6 @@ namespace BoletosApp.Persistance.Repositories.Configuracion
             try
             {
                 Asiento? asientoToUpdate = await _boletoContext.Asientos.FindAsync(entity.IdAsiento);
-
 
                 asientoToUpdate.NumeroAsiento = entity.NumeroAsiento;
                 asientoToUpdate.NumeroPiso = entity.NumeroPiso;

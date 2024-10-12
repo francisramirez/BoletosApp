@@ -10,16 +10,10 @@ using Microsoft.Extensions.Logging;
 
 namespace BoletosApp.Persistance.Repositories.Configuration
 {
-    public sealed class BusRepository : BaseRepository<Bus>, IBusRepository
+    public sealed class BusRepository(BoletoContext context, ILogger<BusRepository> logger) : BaseRepository<Bus>(context), IBusRepository
     {
-        private readonly BoletoContext context;
-        private readonly ILogger<BusRepository> logger;
-
-        public BusRepository(BoletoContext context, ILogger<BusRepository> logger) : base(context)
-        {
-            this.context = context;
-            this.logger = logger;
-        }
+        private readonly BoletoContext context = context;
+        private readonly ILogger<BusRepository> logger = logger;
 
         public async override Task<OperationResult> Save(Bus entity)
         {
