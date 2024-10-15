@@ -1,11 +1,13 @@
 ﻿
-using System;
-using System.Collections.Generic;
+
+using System.ComponentModel.DataAnnotations;
 
 namespace BoletosApp.Domain.Entities.Reservation;
 
 public partial class Viaje
 {
+
+    [Key]
     public int IdViaje { get; set; }
 
     public int? IdBus { get; set; }

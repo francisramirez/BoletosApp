@@ -1,5 +1,6 @@
 ﻿
 using BoletosApp.Domain.Entities.Configuration;
+using BoletosApp.Domain.Result;
 using BoletosApp.Persistance.Base;
 using BoletosApp.Persistance.Context;
 using BoletosApp.Persistance.Interfaces.Configuration;
@@ -12,5 +13,14 @@ namespace BoletosApp.Persistance.Repositories.Configuration
     {
         private readonly BoletoContext context = context;
         private readonly ILogger<RutaRepository> logger = logger;
+
+
+
+        public override Task<OperationResult> Save(Ruta entity)
+        {
+            return base.Save(entity);
+        }
     }
+
+    
 }
