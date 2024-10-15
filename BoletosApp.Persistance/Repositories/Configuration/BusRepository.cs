@@ -85,13 +85,7 @@ namespace BoletosApp.Persistance.Repositories.Configuration
                     result.Message = "El numero de placa no puede ser mayor 50 caracteres.";
                     return result;
                 }
-                if (await base.Exists(bus => bus.NumeroPlaca == entity.NumeroPlaca))
-                {
-                    result.Success = false;
-                    result.Message = "Existe un autobus con este numero de placa.";
-                    return result;
-                }
-
+             
                 await base.Update(entity);
             }
             catch (Exception ex)

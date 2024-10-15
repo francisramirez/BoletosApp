@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BoletosApp.Domain.Entities.Configuration;
+using BoletosApp.Persistance.Interfaces.Configuration;
+using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BoletosApp.Configuration.Api.Controllers
 {
@@ -8,36 +9,63 @@ namespace BoletosApp.Configuration.Api.Controllers
     [ApiController]
     public class BusController : ControllerBase
     {
-        // GET: api/<BusController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IBusRepository _busRepository;
+
+        public BusController(IBusRepository busRepository)
         {
-            return new string[] { "value1", "value2" };
+            _busRepository = busRepository;
+        }
+      
+        [HttpGet("GetBuses")]
+        public async Task<IActionResult> Get()
+        {
+            var result = await _busRepository.GetAll();
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
-        // GET api/<BusController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+       
+        [HttpGet("GetBusById")]
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var result = await _busRepository.GetEntityBy(id);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
-        // POST api/<BusController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+      
+        [HttpPost("SaveBus")]
+        public async Task<IActionResult> Post([FromBody] Bus bus)
         {
+            var result = await _busRepository.Save(bus);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
         // PUT api/<BusController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("UpdateBus")]
+        public async Task<IActionResult> Put([FromBody] Bus bus)
         {
+            var result = await _busRepository.Update(bus);
+
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
-        // DELETE api/<BusController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

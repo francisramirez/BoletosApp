@@ -1,8 +1,10 @@
 ﻿using BoletosApp.Domain.Base;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BoletosApp.Domain.Entities.Configuration
 {
+    [Table("Bus")]
     public sealed class Bus : BaseEntity
     {
         [Key]
