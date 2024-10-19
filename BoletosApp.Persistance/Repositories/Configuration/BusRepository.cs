@@ -28,6 +28,7 @@ namespace BoletosApp.Persistance.Repositories.Configuration
                     result.Message = "La entidad bus no puede ser nula.";
                     return result;
                 }
+               
                 if (string.IsNullOrEmpty(entity.NumeroPlaca))
                 {
                     result.Success = false;

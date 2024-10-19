@@ -9,7 +9,7 @@ namespace BoletosApp.Persistance.Context
     {
         public BoletoContext(DbContextOptions<BoletoContext> options) : base(options)
         {
-
+           
         }
 
         #region "Configuration Entities"
