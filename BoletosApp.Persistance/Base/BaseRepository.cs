@@ -13,6 +13,7 @@ namespace BoletosApp.Persistance.Base
         private DbSet<TEntity> entities;
         public BaseRepository(BoletoContext boletoContext)
         {
+           
             _boletoContext = boletoContext;
             this.entities = _boletoContext.Set<TEntity>();
         }
