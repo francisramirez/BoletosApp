@@ -8,5 +8,6 @@ namespace BoletosApp.Application.Contracts
 {
     public interface IRutaService : IBaseService<RutaResponse, RutaSaveDto, RutaUpdateDto>
     {
+
     }
 }

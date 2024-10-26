@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BoletosApp.Persistance\BoletosApp.Persistance.csproj" />
+    <ProjectReference Include="..\BoletosApp.IOC\BoletosApp.IOC.csproj" />
   </ItemGroup>
 
 </Project>

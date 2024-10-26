@@ -148,7 +148,33 @@ namespace BoletosApp.Persistance.Repositories.Configuration
                                    NumeroPlaca = bus.NumeroPlaca,
 
                                }).AsNoTracking()
-                           .ToListAsync();
+                           .FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                result.Message = "Ocurrio un error obteniendo los autobuses";
+                result.Success = false;
+                this.logger.LogError(result.Message, ex.ToString());
+            }
+            return result;
+        }
+
+        public async Task<OperationResult> GetBusByid(int busId)
+        {
+            OperationResult result = new OperationResult();
+
+            try
+            {
+
+                Bus? bus = await this.context.Buses.FindAsync(busId);
+               
+                if (bus is null) 
+                {
+                    result.Success = false;
+                    result.Message = "El bus no se encuentra registrado.";
+                    return result;
+                }
+                result.Data = bus;
             }
             catch (Exception ex)
             {

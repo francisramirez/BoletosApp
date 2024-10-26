@@ -2,6 +2,7 @@ using BoletosApp.Persistance.Context;
 using BoletosApp.Persistance.Interfaces.Configuration;
 using BoletosApp.Persistance.Repositories.Configuracion;
 using BoletosApp.Persistance.Repositories.Configuration;
+using BoletosApp.IOC.Dependencies.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BoletoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BoletoDb")));
 
 //El registro de cada una de las dependecias Repositorios de configuration. //
-builder.Services.AddScoped<IAsientoRepository, AsientoRepository>();
-builder.Services.AddScoped<IBusRepository, BusRepository>();
-builder.Services.AddScoped<IRutaRepository, RutaRepository>();
+builder.Services.AddConfigurationDependency();
+
 
 
 

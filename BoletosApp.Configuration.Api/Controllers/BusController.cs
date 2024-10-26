@@ -1,4 +1,6 @@
-﻿using BoletosApp.Domain.Entities.Configuration;
+﻿using BoletosApp.Application.Contracts;
+using BoletosApp.Application.Dtos.Configuration.Bus;
+using BoletosApp.Domain.Entities.Configuration;
 using BoletosApp.Persistance.Interfaces.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,45 +11,45 @@ namespace BoletosApp.Configuration.Api.Controllers
     [ApiController]
     public class BusController : ControllerBase
     {
-        private readonly IBusRepository _busRepository;
+        private readonly IBusService _busService;
 
-        public BusController(IBusRepository busRepository)
+        public BusController(IBusService busService)
         {
-            _busRepository = busRepository;
+            _busService = busService;
         }
-      
+
         [HttpGet("GetBuses")]
         public async Task<IActionResult> Get()
         {
-            var result = await _busRepository.GetAll();
+            var result = await _busService.GetAll();
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
                 return BadRequest(result);
             }
             return Ok(result);
         }
 
-       
+
         [HttpGet("GetBusById")]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _busRepository.GetEntityBy(id);
+            var result = await _busService.GetById(id);
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
                 return BadRequest(result);
             }
             return Ok(result);
         }
 
-      
-        [HttpPost("SaveBus")]
-        public async Task<IActionResult> Post([FromBody] Bus bus)
-        {
-            var result = await _busRepository.Save(bus);
 
-            if (!result.Success)
+        [HttpPost("SaveBus")]
+        public async Task<IActionResult> Post([FromBody] BusSaveDto busSaveDto)
+        {
+            var result = await _busService.SaveAsync(busSaveDto); 
+
+            if (!result.IsSuccess)
             {
                 return BadRequest(result);
             }
@@ -56,11 +58,11 @@ namespace BoletosApp.Configuration.Api.Controllers
 
         // PUT api/<BusController>/5
         [HttpPut("UpdateBus")]
-        public async Task<IActionResult> Put([FromBody] Bus bus)
+        public async Task<IActionResult> Put([FromBody] BusUpdateDto busUpdate)
         {
-            var result = await _busRepository.Update(bus);
+            var result = await _busService.UpdateAsync(busUpdate);
 
-            if (!result.Success)
+            if (!result.IsSuccess)
             {
                 return BadRequest(result);
             }

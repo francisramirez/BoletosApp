@@ -93,28 +93,28 @@ namespace BoletosApp.Application.Services.Configuration
 
         public async Task<RutaResponse> SaveAsync(RutaSaveDto dto)
         {
-            RutaResponse rutaResponse = new RutaResponse();
+                RutaResponse rutaResponse = new RutaResponse();
 
-            try
-            {
-                Ruta ruta = new Ruta();
+                try
+                {
+                    Ruta ruta = new Ruta();
 
-                ruta.Destino = dto.Destino;
-                ruta.Origen = dto.Origen;
-                ruta.FechaCreacion = dto.FechaCambio;
-                ruta.UsuarioModificacion = dto.UsuarioCambio;
+                    ruta.Destino = dto.Destino;
+                    ruta.Origen = dto.Origen;
+                    ruta.FechaCreacion = dto.FechaCambio;
+                    ruta.UsuarioModificacion = dto.UsuarioCambio;
 
-                var result = _rutaRepository.Save(ruta);
-            }
-            catch (Exception ex)
-            {
+                    var result = await _rutaRepository.Save(ruta);
+                }
+                catch (Exception ex)
+                {
 
-                rutaResponse.IsSuccess = false;
-                rutaResponse.Message = "Error obteniendo la ruta.";
-                _logger.LogError(rutaResponse.Message, ex.ToString());
-            }
+                    rutaResponse.IsSuccess = false;
+                    rutaResponse.Message = "Error guardando la ruta.";
+                    _logger.LogError(rutaResponse.Message, ex.ToString());
+                }
 
-            return rutaResponse;
+                return rutaResponse;
         }
 
         public async Task<RutaResponse> UpdateAsync(RutaUpdateDto dto)

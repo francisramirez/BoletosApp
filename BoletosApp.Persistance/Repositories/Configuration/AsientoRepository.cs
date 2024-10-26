@@ -189,7 +189,7 @@ namespace BoletosApp.Persistance.Repositories.Configuracion
                                                   NumeroAsiento = asiento.NumeroAsiento,
                                                   NumeroPiso = asiento.NumeroPiso,
                                                   UsuarioModificacion = asiento.UsuarioModificacion
-                                              }).ToListAsync(); ;
+                                              }).ToListAsync(); 
             }
             catch (Exception ex)
             {
