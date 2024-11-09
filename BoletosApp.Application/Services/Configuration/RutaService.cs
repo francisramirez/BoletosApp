@@ -4,6 +4,7 @@ using BoletosApp.Application.Contracts;
 using BoletosApp.Application.Dtos.Configuration.Ruta;
 using BoletosApp.Application.Reponses.Configuration.Ruta;
 using BoletosApp.Domain.Entities.Configuration;
+using BoletosApp.Infraestructure.Interfaces;
 using BoletosApp.Persistance.Interfaces.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -13,9 +14,10 @@ namespace BoletosApp.Application.Services.Configuration
     {
         private readonly IRutaRepository _rutaRepository;
         private readonly ILogger<RutaService> _logger;
+        private readonly INotificacionService notificacionService;
 
         public RutaService(IRutaRepository rutaRepository,
-                           ILogger<RutaService> logger)
+                           ILogger<RutaService> logger, INotificacionService notificacionService)
         {
             if (rutaRepository is null)
             {
@@ -24,6 +26,7 @@ namespace BoletosApp.Application.Services.Configuration
 
             _rutaRepository = rutaRepository;
             _logger = logger;
+            this.notificacionService = notificacionService;
         }
         public async Task<RutaResponse> GetAll()
         {
@@ -32,6 +35,26 @@ namespace BoletosApp.Application.Services.Configuration
             try
             {
                 var result = await _rutaRepository.GetAll();
+
+
+
+
+
+
+                var notfiyResult = await this.notificacionService.SendEmailAsync(new Infraestructure.Models.EmailModel() 
+                {
+                     
+                });
+
+                if (notfiyResult.Success) 
+                {
+                    // Guardar en la tabla de notificacion //
+                }
+                else
+                {
+                    /// guardar en el log y devu
+                   
+                }
 
                 List<GetRutaDto> rutas = ((List<Ruta>)result.Data)
                                          .Select(ruta => new GetRutaDto()

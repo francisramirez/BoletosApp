@@ -1,5 +1,6 @@
 ﻿
 
+using BoletosApp.Domain.Base;
 using BoletosApp.Domain.Result;
 using System.Linq.Expressions;
 

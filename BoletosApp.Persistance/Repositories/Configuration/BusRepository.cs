@@ -107,6 +107,7 @@ namespace BoletosApp.Persistance.Repositories.Configuration
             {
                 result.Data = await (from bus in this.context.Buses
                                where bus.Estatus == true
+                               orderby bus.FechaCreacion descending
                                select new BusModel()
                                {
                                    CapacidadPiso1 = bus.CapacidadPiso1,
