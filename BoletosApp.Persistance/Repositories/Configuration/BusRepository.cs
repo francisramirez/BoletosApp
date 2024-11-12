@@ -105,6 +105,7 @@ namespace BoletosApp.Persistance.Repositories.Configuration
 
             try
             {
+                
                 result.Data = await (from bus in this.context.Buses
                                where bus.Estatus == true
                                orderby bus.FechaCreacion descending
