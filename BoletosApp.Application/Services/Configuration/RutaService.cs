@@ -14,10 +14,10 @@ namespace BoletosApp.Application.Services.Configuration
     {
         private readonly IRutaRepository _rutaRepository;
         private readonly ILogger<RutaService> _logger;
-        private readonly INotificacionService notificacionService;
+        //private readonly INotificacionService notificacionService;
 
         public RutaService(IRutaRepository rutaRepository,
-                           ILogger<RutaService> logger, INotificacionService notificacionService)
+                           ILogger<RutaService> logger)
         {
             if (rutaRepository is null)
             {
@@ -26,7 +26,7 @@ namespace BoletosApp.Application.Services.Configuration
 
             _rutaRepository = rutaRepository;
             _logger = logger;
-            this.notificacionService = notificacionService;
+            //this.notificacionService = notificacionService;
         }
         public async Task<RutaResponse> GetAll()
         {
@@ -37,25 +37,6 @@ namespace BoletosApp.Application.Services.Configuration
                 var result = await _rutaRepository.GetAll();
 
 
-
-
-
-
-                var notfiyResult = await this.notificacionService.SendEmailAsync(new Infraestructure.Models.EmailModel() 
-                {
-                     
-                });
-
-                if (notfiyResult.Success) 
-                {
-                    // Guardar en la tabla de notificacion //
-                }
-                else
-                {
-                    /// guardar en el log y devu
-                   
-                }
-
                 List<GetRutaDto> rutas = ((List<Ruta>)result.Data)
                                          .Select(ruta => new GetRutaDto()
                                          {
@@ -63,7 +44,7 @@ namespace BoletosApp.Application.Services.Configuration
                                              Fecha = ruta.FechaCreacion,
                                              Id = ruta.IdRuta,
                                              Origen = ruta.Origen
-                                         }).ToList();
+                                         }).OrderByDescending(ruta => ruta.Fecha).ToList();
 
 
 
@@ -147,6 +128,14 @@ namespace BoletosApp.Application.Services.Configuration
             try
             {
                 var resultEntity = await _rutaRepository.GetEntityBy(dto.IdRuta);
+
+
+                if (resultEntity.Data is null)
+                {
+                    rutaResponse.IsSuccess = false;
+                    rutaResponse.Message = "La ruta especificada no existe.";
+                    return rutaResponse;
+                }
 
                 Ruta rutaToUpdate = (Ruta)resultEntity.Data;
 

@@ -2,7 +2,14 @@
 {
     public class RutaUpdateDto : RutaBaseDto
     {
-        public int IdRuta { get; set; }
+        public int Id { get; set; }
         public bool Estatus { get; set; }
+        public int IdRuta 
+        {
+            get { return this.Id; }
+             
+        }
+
+
     }
 }

@@ -15,6 +15,11 @@ builder.Services.AddScoped<IBusRepository, BusRepository>();
 
 builder.Services.AddTransient<IBusService, BusService>();
 
+builder.Services.AddScoped<IRutaRepository, RutaRepository>();
+
+builder.Services.AddTransient<IRutaService, RutaService>();
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

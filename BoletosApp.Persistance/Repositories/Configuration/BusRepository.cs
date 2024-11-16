@@ -136,6 +136,9 @@ namespace BoletosApp.Persistance.Repositories.Configuration
 
             try
             {
+
+                var bus = await this.context.Buses.FindAsync()
+
                 result.Data = await (from bus in this.context.Buses
                                where bus.Estatus == true 
                                 && bus.IdBus == Id    
@@ -167,8 +170,6 @@ namespace BoletosApp.Persistance.Repositories.Configuration
 
             try
             {
-
-                Bus? bus = await this.context.Buses.FindAsync(busId);
                
                 if (bus is null) 
                 {
