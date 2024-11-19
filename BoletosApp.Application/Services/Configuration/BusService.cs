@@ -91,8 +91,10 @@ namespace BoletosApp.Application.Services.Configuration
 
             try
             {
-                Bus bus = new Bus();
 
+
+                Bus bus = new Bus();
+                
                 bus.CapacidadPiso1 = dto.CapacidadPiso1;
                 bus.CapacidadPiso2 = dto.CapacidadPiso2;
                 bus.Disponible = dto.Disponible;
@@ -103,7 +105,10 @@ namespace BoletosApp.Application.Services.Configuration
                 bus.Nombre = dto.Nombre;
                 
                 var result = await _busRepository.Save(bus);
-                result.Message = "El autobus fue creado correctamente.";
+                
+
+                busResponse.Message = result.Message;
+                busResponse.IsSuccess = result.Success;   
             }
             catch (Exception ex)
             {

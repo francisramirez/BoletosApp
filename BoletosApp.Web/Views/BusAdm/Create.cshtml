@@ -1,0 +1,67 @@
+﻿@model BoletosApp.Application.Dtos.Configuration.Bus.BusSaveDto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Bus Api</h1>
+
+
+@if (ViewBag.Message != null)
+{
+    <span class="text-danger">@ViewBag.Message</span>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NumeroPlaca" class="control-label"></label>
+                <input asp-for="NumeroPlaca" class="form-control" />
+                <span asp-validation-for="NumeroPlaca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CapacidadPiso1" class="control-label"></label>
+                <input asp-for="CapacidadPiso1" class="form-control" />
+                <span asp-validation-for="CapacidadPiso1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CapacidadPiso2" class="control-label"></label>
+                <input asp-for="CapacidadPiso2" class="form-control" />
+                <span asp-validation-for="CapacidadPiso2" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Disponible" /> @Html.DisplayNameFor(model => model.Disponible)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="FechaCambio" class="control-label"></label>
+                <input asp-for="FechaCambio" class="form-control" />
+                <span asp-validation-for="FechaCambio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsuarioCambio" class="control-label"></label>
+                <input asp-for="UsuarioCambio" class="form-control" />
+                <span asp-validation-for="UsuarioCambio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
