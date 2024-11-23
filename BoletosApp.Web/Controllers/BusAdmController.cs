@@ -1,5 +1,6 @@
 ﻿using BoletosApp.Application.Dtos.Configuration.Bus;
 using BoletosApp.Web.Models;
+using BoletosApp.Web.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -8,34 +9,17 @@ namespace BoletosApp.Web.Controllers
 {
     public class BusAdmController : Controller
     {
+        private readonly IBusApiClientService _busApiClientService;
+
+        public BusAdmController(IBusApiClientService busApiClientService)
+        {
+            _busApiClientService = busApiClientService;
+        }
         // GET: BusAdmController
         public async Task<IActionResult> Index()
         {
 
-            string url = "http://localhost:5000/api/";
-
-            BusGetAllResultModel busGetAllResultModel = new BusGetAllResultModel();
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(url);
-
-                var responseTask = await client.GetAsync("Bus/GetBuses");
-
-                if (responseTask.IsSuccessStatusCode)
-                {
-                    string response = await responseTask.Content.ReadAsStringAsync();
-
-                    busGetAllResultModel = JsonConvert.DeserializeObject<BusGetAllResultModel>(response);
-
-                }
-                else
-                {
-                    ViewBag.Message = "";
-                }
-            }
-
-
+            BusGetAllResultModel busGetAllResultModel = await _busApiClientService.GetBuses();
 
             return View(busGetAllResultModel.data);
         }
@@ -87,7 +71,7 @@ namespace BoletosApp.Web.Controllers
                     client.BaseAddress = new Uri(url);
 
 
-                    var responseTask = await client<BusSaveDto>("Bus/SaveBus", busSave);
+                    var responseTask = await client.PostAsJsonAsync<BusSaveDto>("Bus/SaveBus", busSave);
 
                     if (responseTask.IsSuccessStatusCode)
                     {
@@ -155,10 +139,51 @@ namespace BoletosApp.Web.Controllers
         // POST: BusAdmController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(BusUpdateDto busUpdateDto)
         {
+            BaseApiResponseModel model = new BaseApiResponseModel();
+
             try
             {
+                string url = "http://localhost:5000/api/";
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(url);
+
+
+                    var responseTask = await client.PutAsJsonAsync<BusUpdateDto>("Bus/UpdateBus", busUpdateDto);
+
+                    if (responseTask.IsSuccessStatusCode)
+                    {
+                        string response = await responseTask.Content.ReadAsStringAsync();
+
+                        model = JsonConvert.DeserializeObject<BaseApiResponseModel>(response);
+
+
+                        if (!model.isSuccess)
+                        {
+                            ViewBag.Message = model.message;
+                            return View();
+
+                        }
+                        else
+                        {
+
+                            return RedirectToAction(nameof(Index));
+                        }
+                    }
+                    else
+                    {
+                        string response = await responseTask.Content.ReadAsStringAsync();
+                        model = JsonConvert.DeserializeObject<BaseApiResponseModel>(response);
+
+                        ViewBag.Message = model.message;
+                        return View();
+                    }
+
+
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -169,4 +194,6 @@ namespace BoletosApp.Web.Controllers
 
 
     }
+
+
 }

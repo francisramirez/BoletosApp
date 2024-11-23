@@ -3,7 +3,10 @@ using BoletosApp.Application.Services.Configuration;
 using BoletosApp.Persistance.Context;
 using BoletosApp.Persistance.Interfaces.Configuration;
 using BoletosApp.Persistance.Repositories.Configuration;
+using BoletosApp.Web.Service;
+using BoletosApp.Web.Service.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,15 @@ builder.Services.AddTransient<IRutaService, RutaService>();
 
 
 builder.Services.AddControllersWithViews();
+
+
+
+builder.Services.AddHttpClient<IHttpService, HttpService>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiConfig:UrlBase"]);  
+});
+
+builder.Services.AddTransient<IBusApiClientService, BusApiClientService>();
 
 var app = builder.Build();
 
