@@ -1,5 +1,4 @@
-﻿using BoletosApp.Web.Models;
-
+﻿
 namespace BoletosApp.Web.Service.Base
 {
     public interface IHttpService

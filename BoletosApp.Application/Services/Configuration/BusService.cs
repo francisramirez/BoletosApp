@@ -137,7 +137,7 @@ namespace BoletosApp.Application.Services.Configuration
                 }
 
 
-                Bus bus = (Bus)resultGetById.Data;
+                Bus? bus = (Bus)resultGetById.Data;
 
                 bus.CapacidadPiso1 = dto.CapacidadPiso1;
                 bus.CapacidadPiso2 = dto.CapacidadPiso2;

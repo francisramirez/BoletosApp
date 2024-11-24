@@ -19,7 +19,31 @@ namespace BoletosApp.Web.Controllers
         public async Task<IActionResult> Index()
         {
 
+            // string url = "http://localhost:5000/api/";
+
             BusGetAllResultModel busGetAllResultModel = await _busApiClientService.GetBuses();
+
+              
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(url);
+
+            //    var responseTask = await client.GetAsync("Bus/GetBuses");
+
+            //    if (responseTask.IsSuccessStatusCode)
+            //    {
+            //        string response = await responseTask.Content.ReadAsStringAsync();
+
+            //        busGetAllResultModel = JsonConvert.DeserializeObject<BusGetAllResultModel>(response);
+
+            //    }
+            //    else
+            //    {
+            //        ViewBag.Message = "";
+            //    }
+            //}
+
+
 
             return View(busGetAllResultModel.data);
         }
@@ -61,7 +85,7 @@ namespace BoletosApp.Web.Controllers
         public async Task<IActionResult> Create(BusSaveDto busSave)
         {
             BaseApiResponseModel model = new BaseApiResponseModel();
-
+                
             try
             {
                 string url = "http://localhost:5000/api/";
@@ -103,7 +127,7 @@ namespace BoletosApp.Web.Controllers
 
 
                 }
-                return RedirectToAction(nameof(Index));
+               
             }
             catch
             {
