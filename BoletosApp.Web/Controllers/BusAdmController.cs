@@ -9,39 +9,35 @@ namespace BoletosApp.Web.Controllers
 {
     public class BusAdmController : Controller
     {
-        private readonly IBusApiClientService _busApiClientService;
-
-        public BusAdmController(IBusApiClientService busApiClientService)
-        {
-            _busApiClientService = busApiClientService;
-        }
+        
         // GET: BusAdmController
         public async Task<IActionResult> Index()
         {
 
-            // string url = "http://localhost:5000/api/";
+           
 
-            BusGetAllResultModel busGetAllResultModel = await _busApiClientService.GetBuses();
+            BusGetAllResultModel busGetAllResultModel = new BusGetAllResultModel();
 
-              
-            //using (var client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri(url);
+            string url = "http://localhost:5000/api/";
 
-            //    var responseTask = await client.GetAsync("Bus/GetBuses");
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(url);
 
-            //    if (responseTask.IsSuccessStatusCode)
-            //    {
-            //        string response = await responseTask.Content.ReadAsStringAsync();
+                var responseTask = await client.GetAsync("Bus/GetBuses");
 
-            //        busGetAllResultModel = JsonConvert.DeserializeObject<BusGetAllResultModel>(response);
+                if (responseTask.IsSuccessStatusCode)
+                {
+                    string response = await responseTask.Content.ReadAsStringAsync();
 
-            //    }
-            //    else
-            //    {
-            //        ViewBag.Message = "";
-            //    }
-            //}
+                    busGetAllResultModel = JsonConvert.DeserializeObject<BusGetAllResultModel>(response);
+
+                }
+                else
+                {
+                    ViewBag.Message = "";
+                }
+            }
 
 
 
