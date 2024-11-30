@@ -62,36 +62,43 @@ namespace BoletosApp.Segurity.Api.Controllers
                 }
 
             }
+
             return BadRequest(ModelState);
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return BadRequest(ModelState);
-            }
-            var user = await userManager.FindByNameAsync(loginModel.UserName);
-            if (user != null)
-            {
-                if (await userManager.CheckPasswordAsync(user, loginModel.Password))
+
+                var user = await userManager.FindByNameAsync(loginModel.UserName);
+
+                if (user != null)
                 {
-                    var token = GenerateToken(loginModel.UserName);
-                    return Ok(
-                       new
-                       {
-                           token = token.Item1,
-                           expire = token.Item2
-                       });
+                    if (await userManager.CheckPasswordAsync(user, loginModel.Password))
+                    {
+                        var token = GenerateToken(loginModel.UserName);
+                        return Ok(
+                           new
+                           {
+                               token = token.Item1,
+                               expire = token.Item2
+                           });
+                    }
                 }
+                // If the user is not found, display an error message
+                ModelState.AddModelError("Error", "Invalid username or password");
+
             }
-            // If the user is not found, display an error message
-            ModelState.AddModelError("", "Invalid username or password");
+
+        
+
+            return BadRequest(ModelState);
 
 
 
-            return Ok();
+
         }
 
         private (string, DateTime?) GenerateToken(string userName)
