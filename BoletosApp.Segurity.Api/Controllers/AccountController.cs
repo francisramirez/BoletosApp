@@ -88,19 +88,12 @@ namespace BoletosApp.Segurity.Api.Controllers
                     }
                 }
                 // If the user is not found, display an error message
-                ModelState.AddModelError("Error", "Invalid username or password");
+                ModelState.AddModelError("Error", "Usuario o clave invalida.");
 
             }
-
-        
-
             return BadRequest(ModelState);
 
-
-
-
         }
-
         private (string, DateTime?) GenerateToken(string userName)
         {
 

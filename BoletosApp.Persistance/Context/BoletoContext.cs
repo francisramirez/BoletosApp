@@ -12,6 +12,11 @@ namespace BoletosApp.Persistance.Context
            
         }
 
+        public BoletoContext()
+        {
+            
+        }
+
         #region "Configuration Entities"
         public DbSet<Asiento> Asientos { get; set; }
         public DbSet<Bus> Buses { get; set; }

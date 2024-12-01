@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletosApp.Segurity.Api", "BoletosApp.Segurity.Api\BoletosApp.Segurity.Api.csproj", "{97DC5266-947E-4C0B-A9FE-5E51B3E311A2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{609E5035-D01F-4370-BBC4-BB6F03729991}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoletosApp.Test", "BoletosApp.Test\BoletosApp.Test.csproj", "{F88039F9-19C9-4134-B918-7ECFBD824703}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,10 @@ Global
 		{97DC5266-947E-4C0B-A9FE-5E51B3E311A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97DC5266-947E-4C0B-A9FE-5E51B3E311A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97DC5266-947E-4C0B-A9FE-5E51B3E311A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F88039F9-19C9-4134-B918-7ECFBD824703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F88039F9-19C9-4134-B918-7ECFBD824703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F88039F9-19C9-4134-B918-7ECFBD824703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F88039F9-19C9-4134-B918-7ECFBD824703}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +98,7 @@ Global
 		{0889F818-E3D5-4BF0-B1CF-8BD882EF78D3} = {6D916B5E-7C3B-4AD8-B995-52AB5C413C74}
 		{E81D9D15-677B-4950-B238-36646473AADA} = {6D916B5E-7C3B-4AD8-B995-52AB5C413C74}
 		{97DC5266-947E-4C0B-A9FE-5E51B3E311A2} = {625806A4-4498-4266-A806-DA4B7658F4D2}
+		{F88039F9-19C9-4134-B918-7ECFBD824703} = {609E5035-D01F-4370-BBC4-BB6F03729991}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6843BCDD-6841-4F6C-9A34-34379638A1D3}
