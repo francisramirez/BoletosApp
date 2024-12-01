@@ -1,7 +1,11 @@
 using BoletosApp.Domain.Entities.Configuration;
 using BoletosApp.Domain.Result;
 using BoletosApp.Persistance.Interfaces.Configuration;
+using BoletosApp.Persistance.Repositories.Configuration;
 using BoletosApp.Test.BusTest;
+using BoletosApp.Test.Context;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 namespace BoletosApp.Test
 {
@@ -11,7 +15,9 @@ namespace BoletosApp.Test
 
         public UnitTestBus()
         {
-            _busRepository = new BusMockRepository(new Context.BolectoMockContext());
+            var loggerMock = new Mock<ILogger<BusRepository>>();
+            var bolectoMockContext = new Mock<BolectoMockContext>();
+            _busRepository = new BusRepository(bolectoMockContext.Object, loggerMock.Object);
         }
         [Fact]
         public async void AddBus_NullBus_ReturnsFailure()

@@ -25,7 +25,7 @@ namespace BoletosApp.Persistance.Repositories.Configuration
                 if (entity == null)
                 {
                     result.Success = false;
-                    result.Message = "La entidad bus no puede ser nula.";
+                    result.Message = "El autobus es requerido.";
                     return result;
                 }
                

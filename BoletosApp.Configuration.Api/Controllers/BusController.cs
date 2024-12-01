@@ -2,6 +2,8 @@
 using BoletosApp.Application.Dtos.Configuration.Bus;
 using BoletosApp.Domain.Entities.Configuration;
 using BoletosApp.Persistance.Interfaces.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,6 +11,7 @@ namespace BoletosApp.Configuration.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BusController : ControllerBase
     {
         private readonly IBusService _busService;
