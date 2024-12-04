@@ -28,18 +28,14 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Title = "Configuracion Boletos API",
         Description = "Api para la administracion de la aplicacion de boletos",
-        TermsOfService = new Uri("https://example.com/terms"),
+       
         Contact = new OpenApiContact
         {
             Name = "JOSE PEREZ",
             Email = "jperez@gmail.com",
             Url = new Uri("https://twitter.com/spboyer"),
-        },
-        License = new OpenApiLicense
-        {
-            Name = "Use under LICX",
-            Url = new Uri("https://example.com/license"),
         }
+       
     });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

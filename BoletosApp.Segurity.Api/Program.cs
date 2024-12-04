@@ -47,7 +47,7 @@ namespace BoletosApp.Segurity.Api
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidAudience = audience,
-                    ValidIssuer = issuer,
+                    ValidIssuer = issuer, 
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
                 };
 

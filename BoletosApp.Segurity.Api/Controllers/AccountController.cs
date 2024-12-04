@@ -27,7 +27,7 @@ namespace BoletosApp.Segurity.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-
+               
                 var existedUser = await this.userManager.FindByNameAsync(addOrUpdateApp.UserName);
 
                 if (existedUser is not null)
