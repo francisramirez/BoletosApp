@@ -9,6 +9,7 @@
         }
         public virtual async Task<T> GetAsync<T>(string url)
         {
+
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode(); // Lanza una excepción si la respuesta no es exitosa
             return await response.Content.ReadFromJsonAsync<T>();

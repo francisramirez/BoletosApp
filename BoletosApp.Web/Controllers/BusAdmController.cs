@@ -9,37 +9,25 @@ namespace BoletosApp.Web.Controllers
 {
     public class BusAdmController : Controller
     {
-        
+        private readonly IBusApiClientService _busApiClientService;
+        private readonly ISecurityApiService _securityApiService;
+
+        public BusAdmController(IBusApiClientService busApiClientService, ISecurityApiService securityApiService)
+        {
+            _busApiClientService = busApiClientService;
+            _securityApiService = securityApiService;
+        }
+
         // GET: BusAdmController
         public async Task<IActionResult> Index()
         {
-
-           
-
-            BusGetAllResultModel busGetAllResultModel = new BusGetAllResultModel();
-
-            string url = "http://localhost:5000/api/";
-
-            using (var client = new HttpClient())
+            var datos = await _securityApiService.GetToken(new Models.Security.LoginModel()
             {
-                client.BaseAddress = new Uri(url);
+                Password = "Jperez@2024",
+                UserName = "jperez"
+            });
 
-                var responseTask = await client.GetAsync("Bus/GetBuses");
-
-                if (responseTask.IsSuccessStatusCode)
-                {
-                    string response = await responseTask.Content.ReadAsStringAsync();
-
-                    busGetAllResultModel = JsonConvert.DeserializeObject<BusGetAllResultModel>(response);
-
-                }
-                else
-                {
-                    ViewBag.Message = "";
-                }
-            }
-
-
+            BusGetAllResultModel busGetAllResultModel = await _busApiClientService.GetBuses(datos.token);
 
             return View(busGetAllResultModel.data);
         }
@@ -81,7 +69,7 @@ namespace BoletosApp.Web.Controllers
         public async Task<IActionResult> Create(BusSaveDto busSave)
         {
             BaseApiResponseModel model = new BaseApiResponseModel();
-                
+
             try
             {
                 string url = "http://localhost:5000/api/";
@@ -123,7 +111,7 @@ namespace BoletosApp.Web.Controllers
 
 
                 }
-               
+
             }
             catch
             {

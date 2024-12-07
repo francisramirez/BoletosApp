@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BoletosApp.Segurity.Api.Models
+namespace BoletosApp.Web.Models.Security
 {
     public class LoginModel
     {

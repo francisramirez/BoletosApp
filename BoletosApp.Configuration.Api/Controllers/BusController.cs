@@ -11,7 +11,7 @@ namespace BoletosApp.Configuration.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BusController : ControllerBase
     {
         private readonly IBusService _busService;

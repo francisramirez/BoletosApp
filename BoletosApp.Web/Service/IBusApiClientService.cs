@@ -4,6 +4,6 @@ namespace BoletosApp.Web.Service
 {
     public interface IBusApiClientService
     {
-        Task<BusGetAllResultModel> GetBuses();
+        Task<BusGetAllResultModel> GetBuses(string token);
     }
 }

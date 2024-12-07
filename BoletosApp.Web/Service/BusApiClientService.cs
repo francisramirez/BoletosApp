@@ -1,30 +1,44 @@
-﻿using BoletosApp.Web.Models;
+﻿using Azure;
+using BoletosApp.Application.Dtos.Configuration.Bus;
+using BoletosApp.Web.Models;
 using BoletosApp.Web.Service.Base;
 
 namespace BoletosApp.Web.Service
 {
     public class BusApiClientService : IBusApiClientService
     {
-        private readonly IHttpService _httpService;
+        private readonly HttpClient _httpClient;
         private readonly ILogger<BusApiClientService> _logger;
         private readonly IConfiguration _configuration;
+        private string urlBase; 
       
 
-        public BusApiClientService(IHttpService httpService,
-                                   ILogger<BusApiClientService> logger
+        public BusApiClientService(HttpClient httpClient,
+                                   ILogger<BusApiClientService> logger, 
+                                   IConfiguration configuration
                                    )
         {
-            _httpService = httpService;
+            _httpClient = httpClient;
             _logger = logger;
-          
-            
+            urlBase = configuration["ApiConfig:UrlBase"];
+
+
+
         }
-        public async Task<BusGetAllResultModel> GetBuses()
+        public async Task<BusGetAllResultModel> GetBuses(string token)
         {
             BusGetAllResultModel busGetAllResultModel = new BusGetAllResultModel();
             try
             {
-                busGetAllResultModel = await _httpService.GetAsync<BusGetAllResultModel>("Bus/GetBuses");
+                _httpClient.BaseAddress = new Uri(urlBase);
+               
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+
+                var response = await _httpClient.GetAsync("Bus/GetBuses");
+               
+                response.EnsureSuccessStatusCode();
+
+                busGetAllResultModel = await response.Content.ReadFromJsonAsync<BusGetAllResultModel>();
             }
             catch (Exception ex)
             {

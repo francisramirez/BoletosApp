@@ -26,13 +26,12 @@ builder.Services.AddTransient<IRutaService, RutaService>();
 builder.Services.AddControllersWithViews();
 
 
-
-builder.Services.AddHttpClient<IHttpService, HttpService>(client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["ApiConfig:UrlBase"]);  
-});
+builder.Services.AddHttpClient<IHttpService, HttpService>();
 
 builder.Services.AddTransient<IBusApiClientService, BusApiClientService>();
+
+
+builder.Services.AddTransient<ISecurityApiService, SecurityApiService>();
 
 var app = builder.Build();
 
